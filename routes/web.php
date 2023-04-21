@@ -17,6 +17,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-+ Route::get('/', [App\Http\Controllers\ArticleController::class, 'index']);
+Route::get('/', [App\Http\Controllers\ArticleController::class, 'index']);
 
-+ Route::resource('/articles', App\Http\Controllers\ArticleController::class);
+Route::resource('/articles', App\Http\Controllers\ArticleController::class);
