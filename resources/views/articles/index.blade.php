@@ -9,7 +9,7 @@
             </strong>
         </div>
     @endif
-    {{-- @if (!empty($errors))
+    @if (!empty($errors))
         <div class="error">
             @foreach($errors->all() as $error)
             <strong>
@@ -17,7 +17,7 @@
             </strong>
             @endforeach
         </div>
-    @endif --}}
+    @endif
     <div class="article-contents">
         <aside class="aside-left">
             <nav id="left-nav">
@@ -77,7 +77,8 @@
                         <li class="articles">
                             <div class="user-wrapper">
                                 <img src= {{ $my_article->user->profile_image_url }} class="user-img">
-                                {{ $my_article->user->id }}さんが{{ \Carbon\Carbon::parse($my_article->created_at)->setTimezone('Asia/Tokyo')->format('Y年m月d日 H時i分s秒'); }}に投稿
+                                {{-- {{ $my_article->user->id }}さんが{{ \Carbon\Carbon::parse($my_article->created_at)->setTimezone('Asia/Tokyo')->format('Y年m月d日 H時i分s秒'); }}に投稿 --}}
+                                testさんが{{ \Carbon\Carbon::parse($my_article->created_at)->setTimezone('Asia/Tokyo')->format('Y年m月d日 H時i分s秒'); }}に投稿
                             </div>
                             <p>
                                 <a href="{{ route('articles.show', $my_article->id) }}">{{ $my_article->title }}</a>
