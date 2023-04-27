@@ -2,5 +2,5 @@
 
 return [
     'url' => env('QIITA_URL'),
-    'token' => env('QIITA_TOKEN'),
+    // 'token' => env('QIITA_TOKEN'),
 ];

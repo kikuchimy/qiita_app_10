@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 // Guzzle読み込み
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class ArticleController extends Controller
 {
@@ -25,7 +27,8 @@ class ArticleController extends Controller
         // $optionsにトークンを指定
         $options = [
             'headers' => [
-                'Authorization' => 'Bearer ' . config('qiita.token'),
+                // 'Authorization' => 'Bearer ' . config('qiita.token'),
+                'Authorization' => 'Bearer ' . Crypt::decryptString(Auth::user()->token),
             ],
         ];
 
@@ -52,7 +55,8 @@ class ArticleController extends Controller
         // $optionsにトークンを指定
         $options = [
             'headers' => [
-                'Authorization' => 'Bearer ' . config('qiita.token'),
+                // 'Authorization' => 'Bearer ' . config('qiita.token'),
+                'Authorization' => 'Bearer ' . Crypt::decryptString(Auth::user()->token),
             ],
         ];
 
@@ -110,7 +114,8 @@ class ArticleController extends Controller
         $options = [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . config('qiita.token'),
+                // 'Authorization' => 'Bearer ' . config('qiita.token'),
+                'Authorization' => 'Bearer ' . Crypt::decryptString(Auth::user()->token),
             ],
             'json' => $data,
         ];
@@ -145,7 +150,8 @@ class ArticleController extends Controller
         // $optionsにトークンを指定
         $options = [
             'headers' => [
-                'Authorization' => 'Bearer ' . config('qiita.token'),
+                // 'Authorization' => 'Bearer ' . config('qiita.token'),
+                'Authorization' => 'Bearer ' . Crypt::decryptString(Auth::user()->token),
             ],
         ];
 
@@ -175,7 +181,8 @@ class ArticleController extends Controller
         // $optionsにトークンを指定
         $options = [
             'headers' => [
-                'Authorization' => 'Bearer ' . config('qiita.token'),
+                // 'Authorization' => 'Bearer ' . config('qiita.token'),
+                'Authorization' => 'Bearer ' . Crypt::decryptString(Auth::user()->token),
             ],
         ];
 
@@ -209,7 +216,8 @@ class ArticleController extends Controller
         // $optionsにトークンを指定
         $options = [
             'headers' => [
-                'Authorization' => 'Bearer ' . config('qiita.token'),
+                // 'Authorization' => 'Bearer ' . config('qiita.token'),
+                'Authorization' => 'Bearer ' . Crypt::decryptString(Auth::user()->token),
             ],
         ];
 
@@ -261,7 +269,8 @@ class ArticleController extends Controller
 
         $options = [
             'headers' => [
-                'Authorization' => 'Bearer ' . config('qiita.token'),
+                // 'Authorization' => 'Bearer ' . config('qiita.token'),
+                'Authorization' => 'Bearer ' . Crypt::decryptString(Auth::user()->token),
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],
@@ -294,7 +303,8 @@ class ArticleController extends Controller
         // $optionsにトークンを指定
         $options = [
             'headers' => [
-                'Authorization' => 'Bearer ' . config('qiita.token'),
+                // 'Authorization' => 'Bearer ' . config('qiita.token'),
+                'Authorization' => 'Bearer ' . Crypt::decryptString(Auth::user()->token),
             ],
         ];
 
@@ -303,13 +313,14 @@ class ArticleController extends Controller
 
         try {
             $response = $client->request($method, $url, $options);
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            return back()->withErrors(['error' => '記事の削除に失敗しました']);
-            // return redirect()->route('articles.index')->withErrors(['error' => '記事の削除に失敗しました']);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
-            return back()->withErrors(['error' => '記事の削除に失敗しました']);
+        // } catch (\GuzzleHttp\Exception\ClientException $e) {
+        //     return back()->withErrors(['error' => '記事の削除に失敗しました']);
+        //     // return redirect()->route('articles.index')->withErrors(['error' => '記事の削除に失敗しました']);
+        // } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        //     return back()->withErrors(['error' => '記事の削除に失敗しました']);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => '記事の削除に失敗しました']);
+            logger($e->getMessage());
+            return redirect()->route('articles.index')->withErrors(['error' => '記事の削除に失敗しました']);
         }
 
         return redirect()->route('articles.index')->with('flash_message', '記事を削除しました');
